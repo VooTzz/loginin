@@ -1,33 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - Glass UI</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrasi - Premium Experience</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="background"></div>
-  <div class="container">
-    <form class="glass-card" action="/register" method="POST">
-      <h2>Create Account</h2>
-      <p>Join us and start your journey</p>
+    <a href="login.html" class="back-button">← Kembali ke Login</a>
+    
+    <div class="container">
+        <div class="hero-section">
+            <h1 class="hero-title">Buat Akun Baru</h1>
+            <p class="hero-subtitle">Bergabunglah dengan komunitas eksklusif kami</p>
+        </div>
 
-      <label for="fullName">Full Name</label>
-      <input type="text" id="fullName" placeholder="John Doe" required />
+        <div class="form-card">
+            <h2 class="form-title">Registrasi</h2>
+            
+            <div class="form-group">
+                <label class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-input" placeholder="Nama lengkap Anda" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="email@contoh.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Buat password kuat" id="password" required oninput="checkPasswordStrength()">
+                <button class="password-toggle">👁️</button>
+                <div class="password-strength">
+                    <div class="password-strength-fill" id="password-strength-fill"></div>
+                </div>
+                <div class="password-strength-text" id="password-strength-text">Kekuatan password</div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-input" placeholder="Ulangi password" id="confirm-password" required>
+                <button class="password-toggle">👁️</button>
+            </div>
+            
+            <div class="form-checkbox">
+                <input type="checkbox" class="checkbox-input" id="terms" required>
+                <label for="terms">Saya menyetujui Syarat dan Ketentuan</label>
+            </div>
+            
+            <button class="btn btn-primary">Daftar Sekarang</button>
+            
+            <div class="form-footer">
+                Sudah punya akun? <a href="login.html">Masuk di sini</a>
+            </div>
+        </div>
+    </div>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="you@example.com" required />
+    <script>
+        // Password toggle functionality
+        document.querySelectorAll('.password-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.previousElementSibling;
+                const type = input.type === 'password' ? 'text' : 'password';
+                input.type = type;
+                this.textContent = type === 'password' ? '👁️' : '🔒';
+            });
+        });
 
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="" required />
+        // Check password strength
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('password-strength-fill');
+            const strengthText = document.getElementById('password-strength-text');
+            let strength = 0;
 
-      <button type="submit">Register</button>
+            if (password.length >= 8) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
 
-      <div class="footer">
-        <p>Already have an account? <a href="index.html">Login</a></p>
-      </div>
-    </form>
-  </div>
+            switch (strength) {
+                case 0:
+                    strengthBar.style.width = '0%';
+                    strengthText.textContent = 'Kekuatan password: Sangat Lemah';
+                    break;
+                case 1:
+                    strengthBar.style.width = '25%';
+                    strengthText.textContent = 'Kekuatan password: Lemah';
+                    break;
+                case 2:
+                    strengthBar.style.width = '50%';
+                    strengthText.textContent = 'Kekuatan password: Sedang';
+                    break;
+                case 3:
+                    strengthBar.style.width = '75%';
+                    strengthText.textContent = 'Kekuatan password: Kuat';
+                    break;
+                case 4:
+                    strengthBar.style.width = '100%';
+                    strengthText.textContent = 'Kekuatan password: Sangat Kuat';
+                    break;
+            }
+        }
+    </script>
 </body>
 </html>
